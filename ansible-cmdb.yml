@@ -26,12 +26,3 @@
   hosts: localhost
   roles:
     - ../ansible-cmdb
-
-- name: generate a csv file for facts
-  hosts: all
-  tasks:
-
-  - name: create csv
-    template:
-      src: report_csv.j2
-      dest: overview.csv
