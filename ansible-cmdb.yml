@@ -1,0 +1,37 @@
+---
+- name: Prepare control node
+  hosts: localhost
+  gather_facts: no
+  become: yes
+  roles:
+    - role: robertdebock.bootstrap
+    - role: robertdebock.epel
+    - role: robertdebock.buildtools
+
+
+- name: Install ansible-cmdb
+  hosts: localhost
+  become: yes
+  tasks:
+
+    - name: ensure python pip is installed
+      include_role:
+        name: robertdebock.python_pip
+
+    - name: ensure ansible-cmdb is installed
+      pip:
+        name: ansible-cmdb
+
+- name: Gather facts and generate report of hosts
+  hosts: localhost
+  roles:
+    - ../ansible-cmdb
+
+- name: generate a csv file for facts
+  hosts: all
+  tasks:
+
+  - name: create csv
+    template:
+      src: report_csv.j2
+      dest: overview.csv
