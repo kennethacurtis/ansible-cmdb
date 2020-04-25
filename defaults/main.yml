@@ -1,2 +1,5 @@
 ---
 # defaults file for ansible-cmdb
+inventory_file_path: inventories/hosts
+report_folder_name: files
+report_name: overview

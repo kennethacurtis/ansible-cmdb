@@ -1,0 +1,7 @@
+localhost ansible_connection=local
+
+[redhat]
+redhat-node2 ansible_host=40.70.23.245
+
+[ubuntu]
+ubuntu-node3 ansible_host=13.90.44.254
