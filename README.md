@@ -1,38 +1,71 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+This role generates a file that can be viewable in your local browser. This file includes all data and facts gathered for hosts inside the `inventories/hosts` file
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+None.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+```
+# path of your inventory
+inventory_file_path: inventories/hosts
+
+# folder that you want the reports in
+report_folder_name: files
+
+# the name of the generated report
+report_name: overview
+```
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+* robertdebock.bootstrap
+* robertdebock.buildtools
+* robertdebock.epel
+* robertdebock.python_pip
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+```
+- name: Prepare control node
+  hosts: localhost
+  gather_facts: no
+  become: yes
+  roles:
+    - role: robertdebock.bootstrap
+    - role: robertdebock.epel
+    - role: robertdebock.buildtools
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+
+- name: Install ansible-cmdb
+  hosts: localhost
+  become: yes
+  tasks:
+
+    - name: ensure python pip is installed
+      include_role:
+        name: robertdebock.python_pip
+
+    - name: ensure ansible-cmdb is installed
+      pip:
+        name: ansible-cmdb
+
+- name: Gather facts and generate report of hosts
+  hosts: localhost
+  roles:
+    - ../ansible-cmdb
+```
 
 License
 -------
 
 BSD
 
-Author Information
-------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).

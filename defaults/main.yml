@@ -1,5 +1,11 @@
 ---
 # defaults file for ansible-cmdb
+
+# path of your inventory
 inventory_file_path: inventories/hosts
+
+# folder that you want the reports in
 report_folder_name: files
+
+# the name of the generated report
 report_name: overview
