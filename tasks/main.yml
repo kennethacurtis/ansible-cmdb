@@ -1,2 +1,11 @@
 ---
 # tasks file for ansible-cmdb
+- name: run ansible on controller to gather facts
+  shell: "ansible -i {{ inventory_file_path }} -m setup --tree {{ report_folder_name }}/ all"
+
+- name: set present working directory
+  shell: realpath {{ report_folder_name }}/
+  register: present_directory
+
+- name: generate report
+  shell: "ansible-cmdb {{ present_directory.stdout }} > {{ report_name }}.html"
