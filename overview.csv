@@ -1,0 +1,2 @@
+"Name","OS","IP","Arch","Mem","MemFree","MemUsed","CPUs","Boot Image"
+redhat-node1,RedHat 7.8, 10.0.0.4, x86_64, 3770, 509, 3261, 1, /vmlinuz-3.10.0-1127.el7.x86_64 
